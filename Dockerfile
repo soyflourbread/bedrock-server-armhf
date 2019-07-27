@@ -1,7 +1,7 @@
 FROM debian:latest
 MAINTAINER Black Hat <bhat@encom.eu.org>
 
-RUN apt-get update && apt-get install python3 python3-ply && apt-get clean
+RUN apt-get update && apt-get install -y python3 python3-ply && apt-get clean
 
 RUN git clone --recursive https://github.com/minecraft-linux/mcpelauncher-manifest.git mcpelauncher && cd mcpelauncher && \
     cd mcpelauncher-linux-bin && \
