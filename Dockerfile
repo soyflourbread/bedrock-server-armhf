@@ -1,11 +1,16 @@
-FROM debian:latest AS builder
+FROM debian:buster AS builder
 MAINTAINER Black Hat <bhat@encom.eu.org>
+
+ENV MCPE_REV e405b8c5a1210822741fb7d35cd9433be8880721
 
 WORKDIR /root/
 
 RUN apt-get update && apt-get install -y python3 python3-ply git cmake gcc g++
 
-RUN git clone --recursive https://github.com/minecraft-linux/mcpelauncher-manifest.git mcpelauncher
+RUN git clone --recursive https://github.com/minecraft-linux/mcpelauncher-manifest.git mcpelauncher && \
+    cd mcpelauncher && \
+    git checkout $MCPE_REV && \
+    cd ..
 RUN cd mcpelauncher/mcpelauncher-linux-bin && \
     git checkout armhf && \
     cd ..
@@ -19,7 +24,7 @@ RUN cd mcpelauncher && \
 RUN cd mcpelauncher/build && \
     make install
 
-FROM debian:latest
+FROM debian:buster
 
 WORKDIR /app/
 
